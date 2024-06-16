@@ -26,20 +26,14 @@ resoudreSudoku(sudokuGrid);
 
 
 stopWatch.Stop();
-
-
-
-
-
-
 TimeSpan ts = stopWatch.Elapsed;
 
 // Format and display the TimeSpan value.
 string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
     ts.Hours, ts.Minutes, ts.Seconds,
     ts.Milliseconds / 10);
-Console.WriteLine("RunTime " + elapsedTime);
 
+Console.WriteLine("RunTime " + elapsedTime);
 
 
 void resoudreSudoku(int [,] p_grid)
@@ -50,7 +44,6 @@ void resoudreSudoku(int [,] p_grid)
     bool estResuot = trouverChiffreCoordonnee(coordonnees, p_grid,false);
     Console.WriteLine(estResuot);
 }
-
 
 
 bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_iterationComplete)
@@ -132,8 +125,6 @@ bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_i
 }
 
 
-
-
 void eliminerChiffresCarreActuel(Coordonnees p_coord, List<int> p_nbDisponible, int[,] p_grid)
 {
     int indiceDepartX = 0;
@@ -172,7 +163,6 @@ void eliminerChiffresCarreActuel(Coordonnees p_coord, List<int> p_nbDisponible, 
         }
     }
 }
-
 
 
 bool grilleContientZero(int[,] p_grid)
