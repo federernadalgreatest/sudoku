@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 
 Console.WriteLine("Hello, World!");
-
 int[,] sudokuGrid = {
 {3, 0, 6, 5, 0, 8, 4, 0, 0},
 {5, 2, 0, 0, 0, 0, 0, 0, 0},
@@ -18,9 +17,7 @@ int[,] sudokuGrid = {
 };
 
 
-
 Stopwatch stopWatch = new Stopwatch();
-
 
 stopWatch.Start();
 
@@ -45,19 +42,16 @@ Console.WriteLine("RunTime " + elapsedTime);
 
 
 
-
-
-
-
 void resoudreSudoku(int [,] p_grid)
 {
     Coordonnees coordonnees = new Coordonnees();
-    Stack<Coordonnees> traceCoord = new Stack<Coordonnees> ();
     coordonnees.AxeX = 0;
     coordonnees.AxeY = 0;
     bool estResuot = trouverChiffreCoordonnee(coordonnees, p_grid,false);
     Console.WriteLine(estResuot);
 }
+
+
 
 bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_iterationComplete)
 {
@@ -179,6 +173,8 @@ void eliminerChiffresCarreActuel(Coordonnees p_coord, List<int> p_nbDisponible, 
     }
 }
 
+
+
 bool grilleContientZero(int[,] p_grid)
 {
     bool contientZero = false;
@@ -197,6 +193,8 @@ bool grilleContientZero(int[,] p_grid)
 
     return contientZero;
 }
+
+
 
 
 void afficherGrille(int[,] p_grid)
