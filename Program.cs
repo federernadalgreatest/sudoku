@@ -15,25 +15,38 @@ int[,] sudokuGrid = {
 {0, 0, 0, 0, 0, 0, 0, 7, 4},
 {0, 0, 5, 2, 0, 6, 3, 0, 0}
 };
+int[,] sudokuGrid2 = {{ 5,3,0,0,7,0,0,0,0},
+          { 6,0,0,1,9,5,0,0,0},
+          { 0,9,8,0,0,0,0,6,0},
+          { 8,0,0,0,6,0,0,0,3},
+          { 4,0,0,8,0,3,0,0,1},
+          { 7,0,0,0,2,0,0,0,6},
+          { 0,6,0,0,0,0,2,8,0},
+          { 0,0,0,4,1,9,0,0,5},
+          { 0,0,0,0,8,0,0,7,9}};
+
+for (int i = 0; i < 3; i++)
+{
+    Stopwatch stopWatch = new Stopwatch();
+
+    stopWatch.Start();
 
 
-Stopwatch stopWatch = new Stopwatch();
+    resoudreSudoku(sudokuGrid);
+    //resoudreSudoku(sudokuGrid2);
 
-stopWatch.Start();
+    stopWatch.Stop();
+    TimeSpan ts = stopWatch.Elapsed;
+
+    // Format and display the TimeSpan value.
+    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+        ts.Hours, ts.Minutes, ts.Seconds,
+        ts.Milliseconds);
+
+    Console.WriteLine("RunTime " + elapsedTime);
+}
 
 
-resoudreSudoku(sudokuGrid);
-
-
-stopWatch.Stop();
-TimeSpan ts = stopWatch.Elapsed;
-
-// Format and display the TimeSpan value.
-string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-    ts.Hours, ts.Minutes, ts.Seconds,
-    ts.Milliseconds / 10);
-
-Console.WriteLine("RunTime " + elapsedTime);
 
 
 void resoudreSudoku(int [,] p_grid)
@@ -41,14 +54,14 @@ void resoudreSudoku(int [,] p_grid)
     Coordonnees coordonnees = new Coordonnees();
     coordonnees.AxeX = 0;
     coordonnees.AxeY = 0;
-    bool estResuot = trouverChiffreCoordonnee(coordonnees, p_grid,false);
-    Console.WriteLine(estResuot);
+    bool estResout = trouverChiffreCoordonnee(coordonnees, p_grid,0);
+    Console.WriteLine(estResout);
 }
 
 
-bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_iterationComplete)
+bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid,int p_nbCasesParcourus)
 {
-    afficherGrille(p_grid);
+    p_nbCasesParcourus++;
     if (p_grid[p_coordonnees.AxeX, p_coordonnees.AxeY] == 0)
     {
         List<int> nbDisponible = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -60,7 +73,6 @@ bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_i
                 nbDisponible.Remove(p_grid[x, p_coordonnees.AxeY]);
             }
         }
-
         for (int y = 0; y < 9; y++)
         {
             if (p_grid[p_coordonnees.AxeX, y] != 0)
@@ -68,6 +80,7 @@ bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_i
                 nbDisponible.Remove(p_grid[p_coordonnees.AxeX, y]);
             }
         }
+
         if (nbDisponible.Count == 0)
         {
             return false;
@@ -76,22 +89,34 @@ bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_i
         if (nbDisponible.Count == 1)
         {
             p_grid[p_coordonnees.AxeX, p_coordonnees.AxeY] = nbDisponible[0];
+            p_nbCasesParcourus = 1;
         }
 
-        if (nbDisponible.Count == 2 && p_iterationComplete)
+        if (nbDisponible.Count == 2 && p_nbCasesParcourus > 80)
         {
+            Random rand = new Random();
+            double nb = rand.NextDouble();
+            nb = Math.Round(nb);
             for (int i = 0;i< nbDisponible.Count; i++)
             {
                 Coordonnees temporaireCoord = new Coordonnees();
                 temporaireCoord.AxeX = p_coordonnees.AxeX;
                 temporaireCoord.AxeY = p_coordonnees.AxeY;
                 int[,] temporaireGrille = (int[,])p_grid.Clone();
-                temporaireGrille[p_coordonnees.AxeX, p_coordonnees.AxeY] = nbDisponible[i];
 
-                if (trouverChiffreCoordonnee(temporaireCoord, temporaireGrille, false))
+                if (nb == i)
+                {
+                    temporaireGrille[p_coordonnees.AxeX, p_coordonnees.AxeY] = nbDisponible[(int)nb];
+                }
+                else
+                {
+                    temporaireGrille[p_coordonnees.AxeX, p_coordonnees.AxeY] = nbDisponible[i];
+                }
+
+                if (trouverChiffreCoordonnee(temporaireCoord, temporaireGrille, p_nbCasesParcourus))
                 {
                     i = nbDisponible.Count;
-                    p_grid = temporaireGrille;      
+                    p_grid = temporaireGrille;
                 }
             }
         }
@@ -108,20 +133,17 @@ bool trouverChiffreCoordonnee(Coordonnees p_coordonnees, int[,] p_grid, bool p_i
     }
     else
     {
-        p_iterationComplete = !p_iterationComplete;
         p_coordonnees.AxeX = 0;
         p_coordonnees.AxeY = 0;
     }
    
     if(grilleContientZero(p_grid) == false)
     {
-        afficherGrille(p_grid);
+        //afficherGrille(p_grid);
         return true;
     }
 
-    return trouverChiffreCoordonnee(p_coordonnees, p_grid, p_iterationComplete); ;
-
-    
+    return trouverChiffreCoordonnee(p_coordonnees, p_grid, p_nbCasesParcourus); ; 
 }
 
 
@@ -183,8 +205,6 @@ bool grilleContientZero(int[,] p_grid)
 
     return contientZero;
 }
-
-
 
 
 void afficherGrille(int[,] p_grid)

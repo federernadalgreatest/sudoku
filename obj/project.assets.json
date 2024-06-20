@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\ProjetPerso\\sudoku\\sudoku.csproj",
+      "projectUniqueName": "C:\\sudo\\sudoku\\sudoku.csproj",
       "projectName": "sudoku",
-      "projectPath": "C:\\ProjetPerso\\sudoku\\sudoku.csproj",
+      "projectPath": "C:\\sudo\\sudoku\\sudoku.csproj",
       "packagesPath": "C:\\Users\\plamp\\.nuget\\packages\\",
-      "outputPath": "C:\\ProjetPerso\\sudoku\\obj\\",
+      "outputPath": "C:\\sudo\\sudoku\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\plamp\\AppData\\Roaming\\NuGet\\NuGet.Config",
